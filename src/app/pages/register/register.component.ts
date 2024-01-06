@@ -1,40 +1,40 @@
-import { Component } from '@angular/core';
-import {MatInputModule} from "@angular/material/input";
-import {MatSelectModule} from "@angular/material/select";
+import {Component} from '@angular/core';
 import {FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators} from "@angular/forms";
 import {MatButtonModule} from "@angular/material/button";
-import {AuthService} from "../../../_services/auth.service";
+import {MatFormFieldModule} from "@angular/material/form-field";
+import {MatInputModule} from "@angular/material/input";
 import {RouterLink} from "@angular/router";
+import {AuthService} from "../../../_services/auth.service";
 
 @Component({
-  selector: 'app-login',
+  selector: 'app-register',
   standalone: true,
   imports: [
-    MatInputModule,
-    MatSelectModule,
     FormsModule,
     MatButtonModule,
+    MatFormFieldModule,
+    MatInputModule,
     ReactiveFormsModule,
     RouterLink
   ],
-  templateUrl: './login.component.html',
-  styleUrl: './login.component.scss'
+  templateUrl: './register.component.html',
+  styleUrl: './register.component.scss'
 })
-export class LoginComponent {
-  public loginForm: FormGroup;
+export class RegisterComponent {
+  public registerForm: FormGroup;
 
   constructor(private fb: FormBuilder,
               private authService: AuthService) {
 
-    this.loginForm = this.fb.group({
+    this.registerForm = this.fb.group({
       email: ['', [Validators.email, Validators.required]],
-      password: ['', [Validators.required, Validators.minLength(8)]]
+      password: ['', [Validators.required, Validators.minLength(8)]],
+      username: ['', [Validators.required, Validators.minLength(3)]]
     });
-
   }
 
-  public login() {
-    this.authService.login(this.loginForm.value)
+  public register() {
+    this.authService.register(this.registerForm.value)
       .subscribe(
         (response) => {
           console.log(response);
