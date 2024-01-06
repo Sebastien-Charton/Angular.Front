@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterOutlet } from '@angular/router';
 import {MAT_FORM_FIELD_DEFAULT_OPTIONS} from "@angular/material/form-field";
-import {HttpClientModule} from "@angular/common/http";
+import {environment} from "../environments/environment";
 
 @Component({
   selector: 'app-root',
@@ -15,5 +15,5 @@ import {HttpClientModule} from "@angular/common/http";
   ]
 })
 export class AppComponent {
-  title = 'angular-front';
+  title = environment.appName;
 }
