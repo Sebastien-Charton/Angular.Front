@@ -23,6 +23,11 @@
       </mat-form-field>
 
       <mat-form-field class="field">
+        <mat-label>Password Confirmation</mat-label>
+        <input type="password" matInput formControlName="passwordConfirmation">
+      </mat-form-field>
+
+      <mat-form-field class="field">
         <mat-label>UserName</mat-label>
         <input type="username" matInput formControlName="username">
         @if(registerForm.get('username')?.invalid) {
@@ -31,7 +36,7 @@
       </mat-form-field>
 
       <div class="bottom-form">
-        <button mat-raised-button class="register-button" color="primary" type="submit" [disabled]="false">Register</button>
+        <button mat-raised-button class="register-button" color="primary" type="submit" [disabled]="registerForm.invalid">Register</button>
       </div>
     </form>
   </div>

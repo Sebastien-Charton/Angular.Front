@@ -23,7 +23,7 @@
       </mat-form-field>
 
       <div class="bottom-form">
-        <button mat-raised-button class="login-button" color="primary" type="submit" [disabled]="false">Login</button>
+        <button mat-raised-button class="login-button" color="primary" type="submit" [disabled]="loginForm.invalid">Login</button>
         <a mat-raised-button class="register-link" routerLink="register">Register here</a>
       </div>
     </form>

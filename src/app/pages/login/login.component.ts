@@ -5,6 +5,7 @@ import {FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators} fr
 import {MatButtonModule} from "@angular/material/button";
 import {AuthService} from "../../../_services/auth.service";
 import {RouterLink} from "@angular/router";
+import {passwordStrengthValidator} from "../../../_validators/password-validator";
 
 @Component({
   selector: 'app-login',
@@ -28,17 +29,19 @@ export class LoginComponent {
 
     this.loginForm = this.fb.group({
       email: ['', [Validators.email, Validators.required]],
-      password: ['', [Validators.required, Validators.minLength(8)]]
+      password: ['', [Validators.required, passwordStrengthValidator()]]
     });
 
   }
 
   public login() {
-    this.authService.login(this.loginForm.value)
-      .subscribe({
-        next: (response) => console.log(response),
-        error: (error) => console.error(error),
-        complete: () => console.log('complete')
-      });
+    if (this.loginForm.valid) {
+      this.authService.login(this.loginForm.value)
+        .subscribe({
+          next: (response) => console.log(response),
+          error: (error) => console.error(error),
+          complete: () => console.log('complete')
+        });
+    }
   }
 }
