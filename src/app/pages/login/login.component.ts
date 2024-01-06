@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import {Component} from '@angular/core';
 import {MatInputModule} from "@angular/material/input";
 import {MatSelectModule} from "@angular/material/select";
 import {FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators} from "@angular/forms";
@@ -35,16 +35,10 @@ export class LoginComponent {
 
   public login() {
     this.authService.login(this.loginForm.value)
-      .subscribe(
-        (response) => {
-          console.log(response);
-        },
-        (error) => {
-          console.error(error);
-        },
-        () => {
-          console.log('complete');
-        }
-      );
+      .subscribe({
+        next: (response) => console.log(response),
+        error: (error) => console.error(error),
+        complete: () => console.log('complete')
+      });
   }
 }
