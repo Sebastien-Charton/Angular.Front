@@ -1,0 +1,11 @@
+version: '3.4'
+
+services:
+  angularfront:
+    container_name: angularfront
+    build:
+      context: .
+    restart: always
+    ports:
+      - "5300:80"
+      - "5301:443"
