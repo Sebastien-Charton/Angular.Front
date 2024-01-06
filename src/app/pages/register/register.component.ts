@@ -35,16 +35,10 @@ export class RegisterComponent {
 
   public register() {
     this.authService.register(this.registerForm.value)
-      .subscribe(
-        (response) => {
-          console.log(response);
-        },
-        (error) => {
-          console.error(error);
-        },
-        () => {
-          console.log('complete');
-        }
-      );
+      .subscribe({
+        next: (response) => console.log(response),
+        error: (error) => console.error(error),
+        complete: () => console.log('complete')
+      });
   }
 }
