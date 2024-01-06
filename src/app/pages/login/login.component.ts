@@ -6,6 +6,7 @@ import {MatButtonModule} from "@angular/material/button";
 import {AuthService} from "../../../_services/auth.service";
 import {RouterLink} from "@angular/router";
 import {passwordStrengthValidator} from "../../../_validators/password-validator";
+import {LoginUserCommand} from "../../../_clients/web-api-client";
 
 @Component({
   selector: 'app-login',
@@ -31,17 +32,26 @@ export class LoginComponent {
       email: ['', [Validators.email, Validators.required]],
       password: ['', [Validators.required, passwordStrengthValidator()]]
     });
-
   }
 
   public login() {
-    if (this.loginForm.valid) {
-      this.authService.login(this.loginForm.value)
-        .subscribe({
-          next: (response) => console.log(response),
-          error: (error) => console.error(error),
-          complete: () => console.log('complete')
-        });
-    }
+    if (this.loginForm.invalid) return;
+
+    const loginUserCommand = this.mapLoginFromToLoginUserCommand();
+
+    this.authService.login(loginUserCommand)
+      .subscribe({
+        next: (response) => console.log(response),
+        error: (error) => console.error(error),
+        complete: () => console.log('complete')
+      });
+  }
+
+  private mapLoginFromToLoginUserCommand(): LoginUserCommand {
+    const loginUserCommand = new LoginUserCommand();
+    loginUserCommand.email = this.loginForm.value.email;
+    loginUserCommand.password = this.loginForm.value.password;
+
+    return loginUserCommand;
   }
 }
