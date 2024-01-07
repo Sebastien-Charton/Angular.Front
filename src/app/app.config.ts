@@ -3,7 +3,7 @@ import { provideRouter } from '@angular/router';
 
 import { routes } from './app.routes';
 import { provideAnimations } from '@angular/platform-browser/animations';
-import {provideHttpClient} from "@angular/common/http";
+import { provideHttpClient} from "@angular/common/http";
 import {AUTH_API_URL} from "../_clients/web-api-client";
 import {environment} from "../environments/environment";
 import {JWT_OPTIONS, JwtHelperService} from "@auth0/angular-jwt";

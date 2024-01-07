@@ -1,5 +1,6 @@
 import {Injectable} from '@angular/core';
 import {
+  AcceptLanguage12,
   AcceptLanguage15,
   AcceptLanguage16,
   AcceptLanguage2,
@@ -9,7 +10,6 @@ import {
   UserClient
 } from "../_clients/web-api-client";
 import {map, Observable} from "rxjs";
-import {JwtHelperService} from "@auth0/angular-jwt";
 import {TokenService} from "./token.service";
 
 @Injectable({
@@ -45,5 +45,9 @@ export class AuthService {
 
   public isEmailExists(email: string): Observable<boolean> {
     return this.authClient.isEmailExists(email, AcceptLanguage15.EnUS);
+  }
+
+  public isEmailConfirmed(): Observable<boolean> {
+    return this.authClient.isEmailConfirmed(AcceptLanguage12.EnUS);
   }
 }

@@ -33,27 +33,32 @@ export class TokenService {
     }
   }
 
-  public getRoles(): string[] {
+  public getRoles(): string[] | null {
     const decodedToken = this.decodeToken();
 
-    return  decodedToken.role;
+    return  decodedToken?.role;
   }
 
-  public getEmail(): string {
+  public getEmail(): string | null {
     const decodedToken = this.decodeToken();
 
-    return  decodedToken.email;
+    return  decodedToken?.email;
   }
 
-  public getUserName(): string {
+  public getUserName(): string | null {
     const decodedToken = this.decodeToken();
 
-    return  decodedToken.family_name;
+    return  decodedToken?.family_name;
   }
 
-  public getUserId(): string {
+  public getUserId(): string | null {
     const decodedToken = this.decodeToken();
 
-    return  decodedToken.nameid;
+    return  decodedToken?.nameid;
+  }
+
+  public isAuthenticated(): boolean {
+    const token = this.getToken();
+    return !this.isTokenExpired(token);
   }
 }
