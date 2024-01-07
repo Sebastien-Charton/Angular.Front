@@ -36,7 +36,7 @@
 
       <mat-form-field (focusout)="isUserNameAlreadyExists()" class="field">
         <mat-label>UserName</mat-label>
-        <input type="username" matInput formControlName="username">
+        <input type="text" matInput formControlName="username">
         @if(registerForm?.get('username')?.errors?.['userNameAlreadyExists']) {
           <mat-error>
             UserName already used
@@ -50,7 +50,9 @@
 
       <div class="bottom-form">
         <button mat-raised-button class="register-button" color="primary" type="submit" [disabled]="registerForm.invalid">Register</button>
+        <a mat-raised-button class="register-link" [routerLink]="routesNames.login">Login here</a>
       </div>
+
     </form>
   </div>
 </div>

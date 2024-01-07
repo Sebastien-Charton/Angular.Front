@@ -8,6 +8,7 @@ import {AuthService} from "../../../_services/auth.service";
 import {confirmPasswordValidator, passwordStrengthValidator} from "../../../_validators/password-validator";
 import {NgForOf, NgIf} from "@angular/common";
 import {RegisterUserCommand} from "../../../_clients/web-api-client";
+import {routesNames} from "../../app.routes";
 
 @Component({
   selector: 'app-register',
@@ -90,4 +91,6 @@ export class RegisterComponent {
         }
       });
   }
+
+  protected readonly routesNames = routesNames;
 }

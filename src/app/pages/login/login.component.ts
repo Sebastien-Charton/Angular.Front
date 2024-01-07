@@ -4,9 +4,10 @@ import {MatSelectModule} from "@angular/material/select";
 import {FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators} from "@angular/forms";
 import {MatButtonModule} from "@angular/material/button";
 import {AuthService} from "../../../_services/auth.service";
-import {RouterLink} from "@angular/router";
+import {Router, RouterLink, RouterModule} from "@angular/router";
 import {passwordStrengthValidator} from "../../../_validators/password-validator";
-import {LoginUserCommand} from "../../../_clients/web-api-client";
+import {LoginUserCommand, LoginUserResponse} from "../../../_clients/web-api-client";
+import {routesNames} from "../../app.routes";
 
 @Component({
   selector: 'app-login',
@@ -17,7 +18,8 @@ import {LoginUserCommand} from "../../../_clients/web-api-client";
     FormsModule,
     MatButtonModule,
     ReactiveFormsModule,
-    RouterLink
+    RouterLink,
+    RouterModule
   ],
   templateUrl: './login.component.html',
   styleUrl: './login.component.scss'
@@ -27,7 +29,8 @@ export class LoginComponent {
   public errorMessage: string = '';
 
   constructor(private fb: FormBuilder,
-              private authService: AuthService) {
+              private authService: AuthService,
+              private router: Router) {
 
     this.loginForm = this.fb.group({
       email: ['', [Validators.email, Validators.required]],
@@ -42,10 +45,18 @@ export class LoginComponent {
 
     this.authService.login(loginUserCommand)
       .subscribe({
-        next: (response) => console.log(response),
+        next: (response) => this.successfulLogin(response),
         error: (error) => this.handleError(error),
         complete: () => console.log('complete')
       });
+  }
+
+  public successfulLogin(loginUserResponse : LoginUserResponse) {
+
+    console.log(loginUserResponse.token);
+
+    this.router
+      .navigate([routesNames.message]);
   }
 
   private mapLoginFromToLoginUserCommand(): LoginUserCommand {
@@ -62,4 +73,6 @@ export class LoginComponent {
     else
       this.errorMessage = 'An error occurred while trying to login. Please try again later.';
   }
+
+  protected readonly routesNames = routesNames;
 }
