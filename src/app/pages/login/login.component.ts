@@ -6,7 +6,7 @@ import {MatButtonModule} from "@angular/material/button";
 import {AuthService} from "../../../_services/auth.service";
 import {Router, RouterLink, RouterModule} from "@angular/router";
 import {passwordStrengthValidator} from "../../../_validators/password-validator";
-import {LoginUserCommand, LoginUserResponse} from "../../../_clients/web-api-client";
+import {LoginUserCommand} from "../../../_clients/web-api-client";
 import {routesNames} from "../../app.routes";
 
 @Component({
@@ -45,16 +45,13 @@ export class LoginComponent {
 
     this.authService.login(loginUserCommand)
       .subscribe({
-        next: (response) => this.successfulLogin(response),
+        next: () => this.successfulLogin(),
         error: (error) => this.handleError(error),
         complete: () => console.log('complete')
       });
   }
 
-  public successfulLogin(loginUserResponse : LoginUserResponse) {
-
-    console.log(loginUserResponse.token);
-
+  public successfulLogin() {
     this.router
       .navigate([routesNames.message]);
   }

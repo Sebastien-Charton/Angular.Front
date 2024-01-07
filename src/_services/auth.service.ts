@@ -8,18 +8,31 @@ import {
   RegisterUserCommand,
   UserClient
 } from "../_clients/web-api-client";
-import {Observable} from "rxjs";
+import {map, Observable} from "rxjs";
+import {JwtHelperService} from "@auth0/angular-jwt";
+import {TokenService} from "./token.service";
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
 
-  constructor(public authClient: UserClient) {
+  constructor(private readonly authClient: UserClient,
+              private readonly tokenService: TokenService) {
   }
 
-  public login(loginUserCommand: LoginUserCommand): Observable<LoginUserResponse> {
-    return this.authClient.loginUser(AcceptLanguage4.EnUS, loginUserCommand);
+  public login(loginUserCommand: LoginUserCommand)  : Observable<void>{
+    return this.authClient
+      .loginUser(AcceptLanguage4.EnUS, loginUserCommand)
+      .pipe(
+        map((response: LoginUserResponse) => {
+          const token= response.token;
+
+          if (token != null) {
+            this.tokenService.setToken(token);
+          }
+        })
+      );
   }
 
   public register(registerUserCommand: RegisterUserCommand): Observable<string> {
