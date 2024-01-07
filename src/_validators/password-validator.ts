@@ -30,8 +30,10 @@ export function passwordStrengthValidator():ValidatorFn {
 export const confirmPasswordValidator: ValidatorFn = (
   control: AbstractControl
 ): ValidationErrors | null => {
-  console.log(control.value.password === control.value.passwordConfirmation);
-  return control.value.password === control.value.passwordConfirmation
-    ? null
-    : { PasswordMismatch: true };
+
+  const arePasswordsMatching = control.value.password === control.value.passwordConfirmation;
+  if(!arePasswordsMatching) control.get('passwordConfirmation')?.setErrors({passwordMismatch: true});
+  else delete control.get('passwordConfirmation')?.errors?.['passwordMismatch'];
+
+  return !arePasswordsMatching ? {passwordMismatch:true}: null;
 };

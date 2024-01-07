@@ -1,5 +1,5 @@
 export const environment = {
   appName: 'Angular.Front',
   production: false,
-  authApiUrl: 'http://localhost:5200'
+  authApiUrl: 'https://localhost:5001'
 };

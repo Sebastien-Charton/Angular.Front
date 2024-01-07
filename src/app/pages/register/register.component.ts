@@ -64,4 +64,17 @@ export class RegisterComponent {
       return registerUserCommand;
     }
   }
+
+  public isEmailAlreadyExists($event: any) {
+    if(this.registerForm.get('email')?.invalid) return;
+
+    this.authService
+      .isEmailExists(this.registerForm.value.email)
+      .subscribe({
+        next: (response) => {
+          if(response) this.registerForm.get('email')?.setErrors({emailAlreadyExists: response});
+          else delete this.registerForm.get('email')?.errors?.['emailAlreadyExists'];
+        }
+      });
+  }
 }

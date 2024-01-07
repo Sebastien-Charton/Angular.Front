@@ -4,10 +4,14 @@
 
       <h1 class="form-title">Register</h1>
 
-      <mat-form-field class="field">
+      <mat-form-field (focusout)="isEmailAlreadyExists($event)" class="field">
         <mat-label>Email</mat-label>
         <input type="email" matInput formControlName="email">
-        @if(registerForm.get('email')?.invalid) {
+        @if(registerForm?.get('email')?.errors?.['emailAlreadyExists']) {
+          <mat-error>
+            Email already used
+          </mat-error>
+        } @else if (registerForm.get('email')?.invalid) {
           <mat-error>
             Email invalid
           </mat-error>
@@ -25,6 +29,9 @@
       <mat-form-field class="field">
         <mat-label>Password Confirmation</mat-label>
         <input type="password" matInput formControlName="passwordConfirmation">
+        @if(registerForm.get('passwordConfirmation')?.errors?.['passwordMismatch']) {
+          <mat-error>Passwords do not match</mat-error>
+        }
       </mat-form-field>
 
       <mat-form-field class="field">

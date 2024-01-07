@@ -24,6 +24,7 @@ import {LoginUserCommand} from "../../../_clients/web-api-client";
 })
 export class LoginComponent {
   public loginForm: FormGroup;
+  public errorMessage: string = '';
 
   constructor(private fb: FormBuilder,
               private authService: AuthService) {
@@ -42,7 +43,7 @@ export class LoginComponent {
     this.authService.login(loginUserCommand)
       .subscribe({
         next: (response) => console.log(response),
-        error: (error) => console.error(error),
+        error: (error) => this.handleError(error),
         complete: () => console.log('complete')
       });
   }
@@ -53,5 +54,12 @@ export class LoginComponent {
     loginUserCommand.password = this.loginForm.value.password;
 
     return loginUserCommand;
+  }
+
+  private handleError(error: any) {
+    if(error.status === 401)
+      this.errorMessage = 'Invalid username or password';
+    else
+      this.errorMessage = 'An error occurred while trying to login. Please try again later.';
   }
 }
