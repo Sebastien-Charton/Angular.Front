@@ -35,7 +35,7 @@ export class RegisterComponent {
       email: new FormControl<string>('', [Validators.email, Validators.required]),
       password: new FormControl<string>('', [Validators.required, passwordStrengthValidator()]),
       passwordConfirmation: new FormControl<string>('', [Validators.required]),
-      username: new FormControl<string>('', [Validators.required, Validators.minLength(8)])
+      username: new FormControl<string>('', [Validators.required, Validators.minLength(3), Validators.maxLength(20) ])
     }, {
       validators: confirmPasswordValidator
     });
@@ -65,7 +65,7 @@ export class RegisterComponent {
     }
   }
 
-  public isEmailAlreadyExists($event: any) {
+  public isEmailAlreadyExists() {
     if(this.registerForm.get('email')?.invalid) return;
 
     this.authService
@@ -74,6 +74,19 @@ export class RegisterComponent {
         next: (response) => {
           if(response) this.registerForm.get('email')?.setErrors({emailAlreadyExists: response});
           else delete this.registerForm.get('email')?.errors?.['emailAlreadyExists'];
+        }
+      });
+  }
+
+  public isUserNameAlreadyExists() {
+    if(this.registerForm.get('username')?.invalid) return;
+
+    this.authService
+      .isUserNameExists(this.registerForm.value.username)
+      .subscribe({
+        next: (response) => {
+          if(response) this.registerForm.get('username')?.setErrors({userNameAlreadyExists: response});
+          else delete this.registerForm.get('username')?.errors?.['userNameAlreadyExists'];
         }
       });
   }

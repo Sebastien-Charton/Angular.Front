@@ -4,7 +4,7 @@
 
       <h1 class="form-title">Register</h1>
 
-      <mat-form-field (focusout)="isEmailAlreadyExists($event)" class="field">
+      <mat-form-field (focusout)="isEmailAlreadyExists()" class="field">
         <mat-label>Email</mat-label>
         <input type="email" matInput formControlName="email">
         @if(registerForm?.get('email')?.errors?.['emailAlreadyExists']) {
@@ -34,11 +34,17 @@
         }
       </mat-form-field>
 
-      <mat-form-field class="field">
+      <mat-form-field (focusout)="isUserNameAlreadyExists()" class="field">
         <mat-label>UserName</mat-label>
         <input type="username" matInput formControlName="username">
-        @if(registerForm.get('username')?.invalid) {
-          <mat-error>UserName invalid</mat-error>
+        @if(registerForm?.get('username')?.errors?.['userNameAlreadyExists']) {
+          <mat-error>
+            UserName already used
+          </mat-error>
+        } @else if (registerForm.get('username')?.invalid) {
+          <mat-error>
+            UserName invalid
+          </mat-error>
         }
       </mat-form-field>
 
